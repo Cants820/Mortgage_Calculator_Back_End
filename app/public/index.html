@@ -63,7 +63,7 @@
                         Calculate
                       </button>
                     
-                      <button type="button" class="btn btn-primary" id="result">
+                      <button type="button" class="btn btn-primary" id="reset-btn">
                           Reset
                         </button>
   
@@ -138,6 +138,18 @@
 
 
         })
+      })
+
+      $("#reset-btn").on("click", function(event){
+
+          event.preventDefault();
+          console.log("hit");
+
+              $("#homePrice").val("");
+              $("#downPayment").val("");
+              $("#interestRate").val("");
+              $("#loanTerm").val("");
+              $("#addPay").val("");
       })
     </script>
   </body>
