@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
+    
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="jumbotron">
+            <h1 class="display-4">Mortgage Calculator</h1>
+            <p class="lead">A simple app to calculate your mortgage</p>
+            <hr class="my-4">
+        </div>
+        </div>
+      </div>
+
+
+      <!-- Form -->
+      <!-- ############################################################################################## -->
+      <div class="row">
+        <div class="col">
+          <form>
+              <div class="form-group row">
+                  <label for="homePrice" class="col-sm-2 col-form-label">Home Price:</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="homePrice">
+                  </div>
+                </div>
+
+              <div class="form-group row">
+                  <label for="downPayment" class="col-sm-2 col-form-label">Down Payment:</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="downPayment">
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <label for="interestRate" class="col-sm-2 col-form-label">Interest Rate:</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="interestRate">
+                    </div>
+                  </div>
+                <div class="form-group row">
+                    <label for="loanTerm" class="col-sm-2 col-form-label">Loan Term:</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" id="loanTerm" >
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                      <label for="addPay" class="col-sm-2 col-form-label">Additional Principal Payment:</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="addPay">
+                      </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="submit">
+                        Calculate
+                      </button>
+                    
+                      <button type="button" class="btn btn-primary" id="result">
+                          Reset
+                        </button>
+  
+                    
+            </form>
+          </div>
+
+      </div>
+    </div>
+
+
+  <!-- Modal -->
+  <!-- ################################################################################################## -->
+<div class="modal fade" id="results-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Mortgage Result</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Shows results inside a modal -->
+          <!-- ########################################### -->
+            <p>Loan: $<span id="loan-result"></span></p>
+            <p>Principal And Interest: $<span id="prin-result"></span></p>
+            <p>Tax: $<span id="tax-result"></span></p>
+            <p>Insurance: $<span id="insurance-result"></span></p>
+            <p>Total: $<span id="total-result"></span></p>
+
+            <!-- ############################################ -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script
+    src="http://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      $("#submit").on("click", function(event) {
+      event.preventDefault();
+        
+        let userData = {
+          loan: $("#homePrice").val().trim(),
+          downPay: $("#downPayment").val().trim(),
+          interestRate: $("#interestRate").val().trim(),
+          loanTerm: $("#loanTerm").val().trim(),
+          additionalPay: $("#addPay").val().trim()
+
+        }
+
+
+        $.post("/calculate", userData, function(data) {
+              $("#results-modal").modal("toggle");
+              console.log(data);
+              $("#loan-result").text(data.loan);
+              $("#prin-result").text(data.principalAndInterest);
+              $("#tax-result").text(data.tax);
+              $("#insurance-result").text(data.insurance);
+              $("#total-result").text(data.total);
+
+
+        })
+      })
+    </script>
+  </body>
+</html>

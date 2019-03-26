@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/Cants820/Mortgage_Calculator_Back_End/issues"
   },
-  "homepage": "https://github.com/Cants820/Mortgage_Calculator_Back_End#readme"
+  "homepage": "https://github.com/Cants820/Mortgage_Calculator_Back_End#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mortgage-js": "^0.1.2"
+  }
 }
